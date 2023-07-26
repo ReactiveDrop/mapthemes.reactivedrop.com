@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Alien Swarm: Reactive Drop Map Theme Generator Image List</title>
+<link href="../style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<a href="../">&larr; Back</a>
+<table border="1">
+<tr>
+<th></th>
+{{range $a := $.Adjectives -}}
+<th>{{$a}}</th>
+{{end -}}
+</tr>
+{{range $n := $.Nouns -}}
+<tr>
+<th>{{$n}}</th>
+{{range $a := $.Adjectives -}}
+<td>
+{{range $.Variants -}}
+<a href="{{printf "%s-%s-%04d.avif" $a $n .}}">{{.}}</a>
+{{end -}}
+</td>
+{{end -}}
+</tr>
+{{end -}}
+</table>
+</body>
+</html>

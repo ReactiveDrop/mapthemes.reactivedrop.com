@@ -1,0 +1,30 @@
+:root {
+	color-scheme: dark;
+}
+
+html {
+	background-color: #111;
+	color: #fff;
+	font-family: sans-serif;
+}
+
+h1 {
+	text-align: center;
+	text-transform: capitalize;
+	margin: 0;
+}
+
+img, button {
+	display: block;
+	margin: 0 auto;
+}
+
+img {
+	--size: calc(min((100vw - 16px) / 16, (100vh - 16px - 5em) / 9));
+	width: calc(var(--size) * 16);
+	height: calc(var(--size) * 9);
+}
+
+td {
+	white-space: nowrap;
+}
