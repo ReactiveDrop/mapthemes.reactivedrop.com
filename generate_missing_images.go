@@ -26,10 +26,10 @@ func main() {
 		panic("-api-host flag is required")
 	}
 
-	adjectives := readLines("adjective.txt")
-	nouns := readLines("noun.txt")
+	adjectives := readLines("www/adjective.txt")
+	nouns := readLines("www/noun.txt")
 
-	err := os.MkdirAll("images", 0755)
+	err := os.MkdirAll("www/images", 0755)
 	if err != nil {
 		panic(err)
 	}
@@ -66,9 +66,9 @@ func readLines(filename string) []string {
 }
 
 func writeIndexFile(adjectives, nouns []string) {
-	tmpl := template.Must(template.ParseFiles("images/index.tmpl"))
+	tmpl := template.Must(template.ParseFiles("www/images/index.tmpl"))
 
-	f, err := os.Create("images/index.html")
+	f, err := os.Create("www/images/index.html")
 	if err != nil {
 		panic(err)
 	}
@@ -99,7 +99,7 @@ func generateMissingImages(adjective, noun string) int {
 	generated := 0
 
 	for i := 0; i < *count; i++ {
-		filename := fmt.Sprintf("images/%s-%s-%04d.avif", adjective, noun, i)
+		filename := fmt.Sprintf("www/images/%s-%s-%04d.avif", adjective, noun, i)
 		_, err := os.Stat(filename)
 		if err == nil {
 			continue
