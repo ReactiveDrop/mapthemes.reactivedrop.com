@@ -31,7 +31,7 @@ func main() {
 
 	adjectives := readLines("www/adjective.txt")
 	nouns := readLines("www/noun.txt")
-	combined := make([]string, 0, len(adjectives))
+	combined := make([]string, 1, len(adjectives)+len(nouns)+1)
 	combined = append(combined, nouns...)
 	for _, adjective := range adjectives {
 		seen := false
