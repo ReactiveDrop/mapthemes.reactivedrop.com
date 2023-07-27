@@ -14,10 +14,12 @@ import (
 	"time"
 )
 
-var (
-	apiHost = flag.String("api-host", "", "AUTOMATIC1111 webui origin name")
-	count   = flag.Int("count", 10, "number of seeds per adjective/noun combo")
-)
+var apiHost = flag.String("api-host", "", "AUTOMATIC1111 webui origin name")
+
+var seeds = [...]int{
+	563560, 563561, 563562, 563563, 563564,
+	563565, 563566, 563567, 563568, 563569,
+}
 
 func main() {
 	flag.Parse()
@@ -49,11 +51,11 @@ func main() {
 		panic(err)
 	}
 
-	total := (len(adjectives)*len(nouns) + len(combined)) * *count
+	total := (len(adjectives)*len(nouns) + len(combined)) * len(seeds)
 
 	writeIndexFile(adjectives, nouns)
 
-	fmt.Printf("%d adjectives; %d nouns; %d overlap; %d variants\n%d total images\n", len(adjectives), len(nouns), len(adjectives)+len(nouns)-len(combined), *count, total)
+	fmt.Printf("%d adjectives; %d nouns; %d overlap; %d variants\n%d total images\n", len(adjectives), len(nouns), len(adjectives)+len(nouns)-len(combined), len(seeds), total)
 
 	generated := 0
 
@@ -93,7 +95,7 @@ func writeIndexFile(adjectives, nouns []string) {
 	}
 	defer f.Close()
 
-	variants := make([]int, *count)
+	variants := make([]int, len(seeds))
 	for i := range variants {
 		variants[i] = i
 	}
@@ -117,7 +119,7 @@ func writeIndexFile(adjectives, nouns []string) {
 func generateMissingImages(adjective, noun string) int {
 	generated := 0
 
-	for i := 0; i < *count; i++ {
+	for i, seed := range seeds {
 		filename := fmt.Sprintf("www/images/%s-%s-%04d.avif", adjective, noun, i)
 		_, err := os.Stat(filename)
 		if err == nil {
@@ -128,16 +130,16 @@ func generateMissingImages(adjective, noun string) int {
 			panic(err)
 		}
 
-		fmt.Printf("Generating image %d/%d for %s %s... ", i, *count, adjective, noun)
+		fmt.Printf("Generating image %d/%d for %s %s... ", i, len(seeds), adjective, noun)
 		start := time.Now()
 
-		png := generateImage(adjective, noun, i)
+		png := generateImage(adjective, noun, seed)
 		err = os.WriteFile(filename+".png", png, 0644)
 		if err != nil {
 			panic(err)
 		}
 
-		err = exec.Command("avifenc", "--speed", "0", filename+".png", filename).Run()
+		err = exec.Command("avifenc", "--speed", "0", "--jobs", "all", filename+".png", filename).Run()
 		if err != nil {
 			panic(err)
 		}
@@ -155,7 +157,7 @@ func generateMissingImages(adjective, noun string) int {
 	return generated
 }
 
-func generateImage(adjective, noun string, number int) []byte {
+func generateImage(adjective, noun string, seed int) []byte {
 	query, err := json.Marshal(map[string]interface{}{
 		"sampler_name":       "Euler a",
 		"steps":              50,
@@ -166,7 +168,7 @@ func generateImage(adjective, noun string, number int) []byte {
 		"hr_scale":           2,
 		"hr_upscaler":        "Latent",
 		"denoising_strength": 0.7,
-		"seed":               563560 + number,
+		"seed":               seed,
 		"prompt":             adjective + " " + noun + ", level design render, wide view, dim volumetric lighting, retrofuturism",
 		"negative_prompt":    "text, 2d, screenshot, watermark",
 	})
@@ -190,7 +192,7 @@ func generateImage(adjective, noun string, number int) []byte {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		panic("unexpected response status " + resp.Status + " for A:" + adjective + " N:" + noun + " V:" + strconv.Itoa(number))
+		panic("unexpected response status " + resp.Status + " for A:" + adjective + " N:" + noun + " S:" + strconv.Itoa(seed))
 	}
 
 	var data struct {
