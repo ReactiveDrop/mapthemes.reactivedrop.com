@@ -18,7 +18,7 @@ async function fetchLines(name) {
 		fetchLines("adjective.txt"),
 		fetchLines("noun.txt"),
 	]);
-	const combined = adjectives.concat(nouns).filter(function(v, i, a) {
+	const combined = [""].concat(adjectives, nouns).filter(function(v, i, a) {
 		return a.indexOf(v) === i;
 	});
 	const twoWordCombos = adjectives.length * nouns.length;
