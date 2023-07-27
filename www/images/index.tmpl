@@ -9,7 +9,12 @@
 <a href="../">&larr; Back</a>
 <table border="1">
 <tr>
-<th></th>
+<th>
+<br>
+{{range $.Variants -}}
+<a href="{{printf "--%04d.avif" .}}">{{.}}</a>
+{{end -}}
+</th>
 {{range $a := $.Adjectives -}}
 <th>
 {{$a}}<br>
