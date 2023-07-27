@@ -149,7 +149,7 @@ func generateImage(adjective, noun string, number int) []byte {
 		"denoising_strength": 0.7,
 		"seed":               563560 + number,
 		"prompt":             adjective + " " + noun + ", level design render, wide view, dim volumetric lighting, retrofuturism",
-		"negative_prompt":    "text, 2d, screenshot",
+		"negative_prompt":    "text, 2d, screenshot, watermark",
 	})
 	if err != nil {
 		panic(err)
