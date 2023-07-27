@@ -48,6 +48,9 @@ async function fetchLines(name) {
 	document.body.insertBefore(h1, document.body.firstChild);
 	document.body.insertBefore(img, document.body.firstChild);
 	img.alt = "computer-generated concept art image";
+	img.onerror = function() {
+		showRandomImage();
+	};
 	button.textContent = "Generate Random Theme";
 	button.onclick = function(e) {
 		e.preventDefault();
