@@ -59,14 +59,14 @@ func main() {
 
 	generated := 0
 
+	for _, word := range combined {
+		generated += generateMissingImages(word, "")
+	}
+
 	for _, noun := range nouns {
 		for _, adjective := range adjectives {
 			generated += generateMissingImages(adjective, noun)
 		}
-	}
-
-	for _, word := range combined {
-		generated += generateMissingImages(word, "")
 	}
 
 	fmt.Printf("%d images generated / %d images already present\n", generated, total-generated)
