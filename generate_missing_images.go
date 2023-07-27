@@ -57,7 +57,7 @@ func main() {
 
 	writeIndexFile(adjectives, nouns)
 
-	fmt.Printf("%d adjectives; %d nouns; %d overlap; %d variants\n%d total images\n", len(adjectives), len(nouns), len(adjectives)+len(nouns)-len(combined), len(seeds), total)
+	fmt.Printf("%d adjectives; %d nouns; %d overlap; %d variants\n%d total images\n", len(adjectives), len(nouns), len(adjectives)+len(nouns)-len(combined)+1, len(seeds), total)
 
 	generated := 0
 
