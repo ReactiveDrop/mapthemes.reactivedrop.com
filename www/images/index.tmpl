@@ -11,12 +11,22 @@
 <tr>
 <th></th>
 {{range $a := $.Adjectives -}}
-<th>{{$a}}</th>
+<th>
+{{$a}}<br>
+{{range $.Variants -}}
+<a href="{{printf "%s--%04d.avif" $a .}}">{{.}}</a>
+{{end -}}
+</th>
 {{end -}}
 </tr>
 {{range $n := $.Nouns -}}
 <tr>
-<th>{{$n}}</th>
+<th>
+{{$n}}<br>
+{{range $.Variants -}}
+<a href="{{printf "%s--%04d.avif" $n .}}">{{.}}</a>
+{{end -}}
+</th>
 {{range $a := $.Adjectives -}}
 <td>
 {{range $.Variants -}}

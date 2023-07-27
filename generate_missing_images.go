@@ -28,17 +28,32 @@ func main() {
 
 	adjectives := readLines("www/adjective.txt")
 	nouns := readLines("www/noun.txt")
+	combined := make([]string, 0, len(adjectives))
+	combined = append(combined, nouns...)
+	for _, adjective := range adjectives {
+		seen := false
+		for _, noun := range nouns {
+			if adjective == noun {
+				seen = true
+				break
+			}
+		}
+
+		if !seen {
+			combined = append(combined, adjective)
+		}
+	}
 
 	err := os.MkdirAll("www/images", 0755)
 	if err != nil {
 		panic(err)
 	}
 
-	total := len(adjectives) * len(nouns) * *count
+	total := (len(adjectives)*len(nouns) + len(combined)) * *count
 
 	writeIndexFile(adjectives, nouns)
 
-	fmt.Printf("%d adjectives; %d nouns; %d variants\n%d total images\n", len(adjectives), len(nouns), *count, total)
+	fmt.Printf("%d adjectives; %d nouns; %d overlap; %d variants\n%d total images\n", len(adjectives), len(nouns), len(adjectives)+len(nouns)-len(combined), *count, total)
 
 	generated := 0
 
@@ -46,6 +61,10 @@ func main() {
 		for _, adjective := range adjectives {
 			generated += generateMissingImages(adjective, noun)
 		}
+	}
+
+	for _, word := range combined {
+		generated += generateMissingImages(word, "")
 	}
 
 	fmt.Printf("%d images generated / %d images already present\n", generated, total-generated)
