@@ -109,7 +109,7 @@ func generateMissingImages(adjective, noun string) int {
 			panic(err)
 		}
 
-		fmt.Printf("Generating image %d/%d for %s %s... ", i+1, *count, adjective, noun)
+		fmt.Printf("Generating image %d/%d for %s %s... ", i, *count, adjective, noun)
 		start := time.Now()
 
 		png := generateImage(adjective, noun, i)
