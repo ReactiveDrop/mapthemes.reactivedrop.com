@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -45,6 +46,7 @@ func main() {
 			combined = append(combined, adjective)
 		}
 	}
+	sort.Strings(combined)
 
 	err := os.MkdirAll("www/images", 0755)
 	if err != nil {
