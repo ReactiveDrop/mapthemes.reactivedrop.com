@@ -2,6 +2,7 @@ abandoned
 acidic
 alien
 alpha
+antlion
 arctic
 beta
 biome
@@ -12,6 +13,7 @@ communication
 concrete
 coolant
 corporate
+cyber
 dark
 delta
 derelict
@@ -23,6 +25,7 @@ engineering
 foreboding
 frozen
 fuel
+fungal
 gamma
 grimy
 holographic
@@ -33,12 +36,14 @@ mechanical
 metal
 midday
 midnight
+neon
 omega
 overgrown
 queen
 radioactive
 recreational
 research
+rusted
 secret
 sigma
 simulated
@@ -48,4 +53,5 @@ strange
 sunset
 toxic
 transport
+undead
 xen
