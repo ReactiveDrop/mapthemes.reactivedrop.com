@@ -10,7 +10,6 @@ elevator
 facility
 factory
 forest
-generator
 greenhouse
 hangar
 highway
