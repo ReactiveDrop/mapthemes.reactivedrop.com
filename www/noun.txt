@@ -1,9 +1,13 @@
 area
 arena
+armory
+biomass
 biome
 bridge
+bunker
 cavern
 center
+city
 colony
 complex
 elevator
@@ -16,12 +20,16 @@ highway
 hive
 hospital
 infestation
+infiltration
 interior
 jungle
+junkyard
 laboratory
 machine
 maintenance
 mine
+nest
+nexus
 platform
 plumbing
 point
@@ -37,5 +45,6 @@ simulation
 station
 train
 tunnels
+ventilation
 warehouse
 zone
